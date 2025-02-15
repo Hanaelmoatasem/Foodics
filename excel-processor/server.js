@@ -5,7 +5,9 @@ const cors = require('cors');
 const fs = require('fs');
 
 const app = express();
-const upload = multer({ dest: 'uploads/' });
+const storage = multer.memoryStorage(); // Store file in memory instead of disk
+const upload = multer({ storage });
+
 
 app.use(cors());
 app.use(express.json());
