@@ -81,4 +81,4 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 
 const PORT = process.env.PORT || 3000; // Use Vercel's default port
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
