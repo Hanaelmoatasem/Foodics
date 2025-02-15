@@ -79,10 +79,9 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.json(result);
 });
 
-
 app.get('/', (req, res) => {
     res.send("Backend is running on Vercel!");
 });
 
-const PORT = process.env.PORT || 3001; // Vercel assigns a PORT
+const PORT = process.env.PORT || 5000; // Vercel assigns a PORT
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
