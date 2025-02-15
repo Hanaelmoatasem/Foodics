@@ -26,6 +26,9 @@ const processExcel = (filePath) => {
         "21:00 - 00:59": { grossSales: 0, netQuantity: 0 },
     };
 
+    let totalGrossSales = 0;
+    let totalNetQuantity = 0;
+
     const getCellValue = (col, row) => {
         const cell = worksheet[`${col}${row}`];
         return cell !== undefined ? parseFloat(cell.v) || 0 : null;
@@ -55,7 +58,13 @@ const processExcel = (filePath) => {
         }
     }
 
-    return { targetDate, timeRanges };
+    // Calculate total gross sales and net quantity
+    for (const range in timeRanges) {
+        totalGrossSales += timeRanges[range].grossSales;
+        totalNetQuantity += timeRanges[range].netQuantity;
+    }
+
+    return { targetDate, timeRanges, totalGrossSales, totalNetQuantity };
 };
 
 // Upload route
