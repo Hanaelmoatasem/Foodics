@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Process Excel file and extract sales data
-const processExcel = (filePath) => {
+const processExcel = (worksheet)  => {
     const workbook = XLSX.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
@@ -73,13 +73,15 @@ const processExcel = (filePath) => {
 app.post('/upload', upload.single('file'), (req, res) => {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
-    const result = processExcel(req.file.path);
+    const workbook = XLSX.read(req.file.buffer, { type: "buffer" }); // Read from memory
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
 
-    // Delete file after processing
-    fs.unlinkSync(req.file.path);
+    const result = processExcel(worksheet); // Pass the worksheet instead of a file path
 
     res.json(result);
 });
+
 
 app.get('/', (req, res) => {
     res.send("Backend is running on Vercel!");
